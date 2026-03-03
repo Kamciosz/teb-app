@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -15,7 +16,14 @@ export default function AuthPage() {
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const { signInWithOtp, signInWithPassword, signUp } = useAuthStore();
+  const { signInWithOtp, signInWithPassword, signUp, session } = useAuthStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (session) {
+      navigate('/');
+    }
+  }, [session, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +47,7 @@ export default function AuthPage() {
         result = await signInWithPassword(email, password);
         if (!result.error) {
           toast.success('Zalogowano pomyślnie!');
+          navigate('/');
         }
       } else if (mode === 'signup') {
         if (password !== confirmPassword) {
