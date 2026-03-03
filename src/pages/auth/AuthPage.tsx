@@ -11,6 +11,8 @@ export default function AuthPage() {
   const [mode, setMode] = useState<AuthMode>('signin-password');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { signInWithOtp, signInWithPassword, signUp } = useAuthStore();
@@ -39,7 +41,17 @@ export default function AuthPage() {
           toast.success('Zalogowano pomyślnie!');
         }
       } else if (mode === 'signup') {
-        result = await signUp(email, password);
+        if (password !== confirmPassword) {
+          toast.error('Hasła nie są identyczne');
+          setLoading(false);
+          return;
+        }
+        if (!fullName.trim()) {
+          toast.error('Imię i nazwisko jest wymagane');
+          setLoading(false);
+          return;
+        }
+        result = await signUp(email, password, fullName);
         if (!result.error) {
           setSubmitted(true);
           toast.success('Sprawdź email, aby potwierdzić rejestrację!');
@@ -117,6 +129,17 @@ export default function AuthPage() {
             autoFocus
           />
           
+          {mode === 'signup' && (
+            <Input
+              type="text"
+              label="Imię i nazwisko"
+              placeholder="Jan Kowalski"
+              value={fullName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFullName(e.target.value)}
+              required
+            />
+          )}
+
           {mode !== 'magic-link' && (
             <Input
               type="password"
@@ -124,6 +147,18 @@ export default function AuthPage() {
               placeholder="••••••••"
               value={password}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              required
+              minLength={6}
+            />
+          )}
+
+          {mode === 'signup' && (
+            <Input
+              type="password"
+              label="Potwierdź hasło"
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
               required
               minLength={6}
             />

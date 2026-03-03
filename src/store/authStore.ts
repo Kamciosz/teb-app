@@ -9,7 +9,7 @@ interface AuthState {
   initialize: () => Promise<void>;
   signInWithOtp: (email: string) => Promise<{ error: any }>;
   signInWithPassword: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string) => Promise<{ error: any; data?: any }>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -64,7 +64,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     return { error };
   },
 
-  signUp: async (email, password) => {
+  signUp: async (email, password, fullName) => {
     if (!email.endsWith('@teb.edu.pl')) {
       return { error: { message: 'Dostęp tylko dla adresów @teb.edu.pl' } };
     }
@@ -74,6 +74,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       password,
       options: {
         emailRedirectTo: window.location.origin,
+        data: {
+          full_name: fullName,
+        },
       },
     });
 
