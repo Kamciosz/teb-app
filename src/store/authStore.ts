@@ -7,7 +7,9 @@ interface AuthState {
   session: Session | null;
   loading: boolean;
   initialize: () => Promise<void>;
-  signIn: (email: string) => Promise<{ error: any }>;
+  signInWithOtp: (email: string) => Promise<{ error: any }>;
+  signInWithPassword: (email: string, password: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -30,7 +32,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  signIn: async (email: string) => {
+  signInWithOtp: async (email: string) => {
     if (!email.endsWith('@teb.edu.pl')) {
       return { error: { message: 'Dostęp tylko dla adresów @teb.edu.pl' } };
     }
@@ -43,6 +45,39 @@ export const useAuthStore = create<AuthState>((set) => ({
     });
 
     return { error };
+  },
+
+  signInWithPassword: async (email, password) => {
+    if (!email.endsWith('@teb.edu.pl')) {
+      return { error: { message: 'Dostęp tylko dla adresów @teb.edu.pl' } };
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (data.session) {
+      set({ session: data.session, user: data.user });
+    }
+
+    return { error };
+  },
+
+  signUp: async (email, password) => {
+    if (!email.endsWith('@teb.edu.pl')) {
+      return { error: { message: 'Dostęp tylko dla adresów @teb.edu.pl' } };
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
+    });
+
+    return { error, data };
   },
 
   signOut: async () => {
