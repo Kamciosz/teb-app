@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '../services/supabase';
-import { MarketItem } from '../types';
+import type { MarketItem } from '../types';
 import imageCompression from 'browser-image-compression';
 
 interface MarketState {
@@ -53,7 +53,7 @@ export const useMarketStore = create<MarketState>((set, get) => ({
     // Upload image
     const fileExt = compressedFile.name.split('.').pop();
     const fileName = `${Math.random()}.${fileExt}`;
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('market-images')
       .upload(fileName, compressedFile);
 

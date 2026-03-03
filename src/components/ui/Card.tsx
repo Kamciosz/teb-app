@@ -1,4 +1,4 @@
-import { HTMLAttributes, forwardRef } from 'react';
+import { type HTMLAttributes, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {

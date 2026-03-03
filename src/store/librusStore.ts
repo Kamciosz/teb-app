@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { supabase } from '../services/supabase';
 
 interface Grade {
   subject: string;

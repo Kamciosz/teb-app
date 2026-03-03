@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '../services/supabase';
-import { Post } from '../types';
+import type { Post } from '../types';
 
 interface FeedState {
   posts: Post[];

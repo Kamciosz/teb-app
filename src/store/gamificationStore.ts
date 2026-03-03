@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '../services/supabase';
-import { UserProfile } from '../types';
+import type { UserProfile } from '../types';
 
 interface GamificationState {
   ranking: UserProfile[];

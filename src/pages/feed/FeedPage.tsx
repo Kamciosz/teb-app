@@ -6,7 +6,6 @@ import { useAuthStore } from '../../store/authStore';
 
 export default function FeedPage() {
   const { posts, loading, fetchPosts } = useFeedStore();
-  const { user } = useAuthStore();
   
   // TODO: Check if user is editor/admin
   const canCreatePost = true; // Placeholder

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '../services/supabase';
-import { ChatMessage } from '../types';
+import type { ChatMessage } from '../types';
 import { filterText } from '../utils/wordFilter';
 
 interface ChatGroup {
@@ -119,7 +119,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
     const { currentGroupId } = get();
     if (!currentGroupId) return;
 
-    const channel = supabase
+    supabase
       .channel(`chat:${currentGroupId}`)
       .on(
         'postgres_changes',
@@ -139,7 +139,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
           const newMessage = {
             ...payload.new,
             sender: senderData
-          } as ChatMessage;
+          } as unknown as ChatMessage;
 
           set((state) => ({
             messages: [...state.messages, newMessage],

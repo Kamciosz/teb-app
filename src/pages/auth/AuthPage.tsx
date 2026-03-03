@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
-import { Button } from '../ui/Button';
-import { Input } from '../ui/Input';
-import { Card } from '../ui/Card';
+import { Button } from '../../components/ui/Button';
+import { Input } from '../../components/ui/Input';
+import { Card } from '../../components/ui/Card';
 import { toast } from 'react-hot-toast';
 
 export default function AuthPage() {
@@ -82,7 +82,7 @@ export default function AuthPage() {
             label="Email szkolny"
             placeholder="imie.nazwisko@teb.edu.pl"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             required
             autoFocus
           />
