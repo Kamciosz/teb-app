@@ -1,5 +1,5 @@
 import { Card } from '../ui/Card';
-import { UserProfile } from '../../types';
+import type { UserProfile } from '../../types';
 import { Trophy, Medal, Award } from 'lucide-react';
 
 interface RankingListProps {

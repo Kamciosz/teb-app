@@ -4,7 +4,7 @@ import { Button } from '../ui/Button';
 import { ThumbsUp, ThumbsDown, MessageSquare, Share2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { pl } from 'date-fns/locale';
-import { Post } from '../../types';
+import type { Post } from '../../types';
 import { useFeedStore } from '../../store/feedStore';
 
 interface PostCardProps {

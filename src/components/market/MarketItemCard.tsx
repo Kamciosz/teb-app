@@ -1,11 +1,11 @@
 import { Card } from '../ui/Card';
-import { MarketItem } from '../../types';
+import type { MarketItem } from '../../types';
 import { Button } from '../ui/Button';
 import { formatDistanceToNow } from 'date-fns';
 import { pl } from 'date-fns/locale';
 
 interface MarketItemCardProps {
-  item: MarketItem;
+  item: MarketItem & { seller?: { full_name: string; avatar_url?: string } };
 }
 
 export const MarketItemCard = ({ item }: MarketItemCardProps) => {

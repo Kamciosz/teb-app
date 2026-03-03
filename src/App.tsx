@@ -10,7 +10,7 @@ import LibrusPage from './pages/librus/LibrusPage';
 import GamificationPage from './pages/gamification/GamificationPage';
 import { useAuthStore } from './store/authStore';
 
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { session, loading } = useAuthStore();
   const location = useLocation();
 

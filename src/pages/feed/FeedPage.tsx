@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useFeedStore } from '../../store/feedStore';
 import { PostCard } from '../../components/feed/PostCard';
 import { CreatePostForm } from '../../components/feed/CreatePostForm';
-import { useAuthStore } from '../../store/authStore';
 
 export default function FeedPage() {
   const { posts, loading, fetchPosts } = useFeedStore();
